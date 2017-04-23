@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update \
-    && apt-get install -y zip unzip \
+    && apt-get install -y zip unzip wget curl \
     && apt-get clean
 
 # Rancher
@@ -20,4 +20,6 @@ RUN wget https://github.com/rancher/rancher-compose/releases/download/v${VERSION
     rm -r rancher-compose-v${VERSION_NUM}
 
 ADD rancher-upgrade.sh /opt/rancher-upgrade.sh
-ENTRYPOINT ["/opt/rancher-upgrade"]
+RUN chmod +x /opt/rancher-upgrade.sh
+
+ENTRYPOINT ["/opt/rancher-upgrade.sh"]
